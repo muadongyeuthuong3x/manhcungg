@@ -9,7 +9,7 @@ function Login() {
       }
     return (
         <div>
-            <h1>Đây là trang dang nhap</h1>
+            <h1>Đây là trang dang nha2222222222222p</h1>
             <label htmlFor="">user name</label>
             <input type="text" id="fname" name="fname" placeholder="user name" />
             <br />
