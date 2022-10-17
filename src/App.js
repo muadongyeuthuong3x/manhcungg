@@ -2,6 +2,7 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Spinner from 'react-bootstrap/Spinner';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
@@ -87,11 +88,13 @@ function App() {
 
   const [linkGet, setLinkGet] = useState('');
   const [stateonChangeGetLink, setstateonChangeGetLink] = useState('');
+  const [loadding, setLoadding] = useState(false)
   // async { await , await } axios
   // await axios.get("ssssssssssssss")
   // await axios.get("11111111111111111")
   const [stateButton, setStateButton] = useState('')
   const onCLickCallApi = async () => {
+    setLoadding(true)
     const response = await axios.get(`https://api.shrtco.de/v2/shorten?url=${stateonChangeGetLink}`);
     const { short_link, short_link2, short_link3 } = response.data.result;
     console.log(stateButton == 'short_link2')
@@ -104,6 +107,7 @@ function App() {
     } else if (stateButton === '') {
       setLinkGet(short_link);
     }
+    setLoadding(false)
   }
   const getLinkOnChange = (event) => {
     setstateonChangeGetLink(event.target.value);
@@ -128,7 +132,14 @@ function App() {
           onChange={getLinkOnChange}
         />
         <InputGroup.Text id="basic-addon2">
-          <button onClick={onCLickCallApi}>Call Api </button>
+          <button onClick={onCLickCallApi}>
+            {
+              loadding ? <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner> : 'Call Api'
+            }
+
+          </button>
         </InputGroup.Text>
       </InputGroup>
       <div>
