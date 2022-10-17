@@ -1,12 +1,19 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+
 import "./listUser.css"
 
 function ListUser() {
-  const listUser = JSON.parse(localStorage.getItem('listUser')) || []
+  const [listUser, setListUser] = useState([])
   const [ttEdit, setTtEdit] = useState({
     email: '',
     password: ''
   })
+
+  const [changeData, setChangeData] = useState(false)
+
+  useEffect(() => {
+    setListUser((JSON.parse(localStorage.getItem('listUser')) || []))
+  }, [changeData])
 
   const [indexEdit, setIndexEdit] = useState(0)
   const updateEmail = (event) => {
@@ -26,6 +33,7 @@ function ListUser() {
   const deleteUser = (index) => {
     const dataAfterDelete = listUser.filter((e, vt) => vt !== index)
     localStorage.setItem('listUser', JSON.stringify(dataAfterDelete));
+    setChangeData(!changeData)
 
   }
   const editUser = (index) => {
